@@ -140,7 +140,7 @@ function renderPhotos(data) {
     const credit = el('figcaption', {}, 'Foto de ',
       el('a', { href: p.photographerUrl, target: '_blank', rel: 'noopener', text: p.photographer }),
       ' en ',
-      el('a', { href: p.pexelsUrl, target: '_blank', rel: 'noopener', text: 'Pexels' }),
+      el('a', { href: p.pexelsUrl, target: '_blank', rel: 'noopener', text: 'Unsplash' }),
     );
     gallery.append(el('figure', {}, el('a', { href: p.pexelsUrl, target: '_blank', rel: 'noopener' }, img), credit));
   }
