@@ -1,6 +1,4 @@
 // Photon (Komoot): geocodificador rápido y gratuito basado en OpenStreetMap.
-// No requiere API Key ni límites tan estrictos como Nominatim.
-
 const { fetchJson, HttpError } = require('../utils/http');
 const { TTLCache } = require('../utils/cache');
 
@@ -12,12 +10,10 @@ async function geocode(text) {
   const cached = cache.get(key);
   if (cached) return cached;
 
-  // Photon usa el parámetro 'q' y devuelve un objeto con 'features'
   const url = `${BASE}?q=${encodeURIComponent(text)}&limit=1&lang=es`;
   
   const data = await fetchJson(url, {
     headers: {
-      // Aunque no es estricto, es buena práctica identificarse
       'User-Agent': process.env.NOMINATIM_USER_AGENT || 'MotoRutaWeb/1.0',
     },
   });
@@ -29,8 +25,6 @@ async function geocode(text) {
   const feature = data.features[0];
   const props = feature.properties;
   
-  // Photon no da un "display_name" completo, así que lo construimos
-  // Ejemplo: "Cusco, Cusco, Perú"
   const parts = [props.name, props.state, props.country].filter(Boolean);
   const displayName = parts.length > 0 ? parts.join(', ') : text;
 
@@ -44,4 +38,5 @@ async function geocode(text) {
   return place;
 }
 
+// ESTA ES LA LÍNEA QUE PROBABLEMENTE FALTABA:
 module.exports = { geocode };
